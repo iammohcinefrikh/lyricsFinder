@@ -1,98 +1,108 @@
+import { Request, Response } from 'express';
 import { Song, SongDocument } from '../models/song.model';
-import mongoose from 'mongoose';
 
 // Function to get all songs
-export async function getAllSongs(): Promise<SongDocument[]> {
+export async function getAllSongs(req: Request, res: Response): Promise<void> {
   try {
     const songs = await Song.find().exec();
-    return songs;
+    res.json(songs);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error retrieving songs' });
   }
 }
 
 // Function to get a song by id
-export async function getSongById(id: string): Promise<SongDocument | null> {
+export async function getSongById(req: Request, res: Response): Promise<void> {
   try {
+    const id = req.params.id;
     const song = await Song.findById(id).exec();
     if (!song) {
-      throw new Error('Song not found');
+      res.status(404).json({ message: 'Song not found' });
+    } else {
+      res.json(song);
     }
-    return song;
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error retrieving song' });
   }
 }
 
 // Function to add a song
-export async function addSong(song: SongDocument): Promise<SongDocument> {
+export async function addSong(req: Request, res: Response): Promise<void> {
   try {
-    const newSong = new Song(song);
+    const newSong = new Song(req.body);
     await newSong.save();
-    return newSong;
+    res.json(newSong);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error adding song' });
   }
 }
 
 // Function to update a song
-export async function updateSong(id: string, song: SongDocument): Promise<SongDocument | null> {
+export async function updateSong(req: Request, res: Response): Promise<void> {
   try {
-    const updatedSong = await Song.findByIdAndUpdate(id, song, { new: true }).exec();
-    if (!updatedSong) {
-      throw new Error('Song not found');
+    const id = req.params.id;
+    const song = await Song.findByIdAndUpdate(id, req.body, { new: true }).exec();
+    if (!song) {
+      res.status(404).json({ message: 'Song not found' });
+    } else {
+      res.json(song);
     }
-    return updatedSong;
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error updating song' });
   }
 }
 
 // Function to delete a song
-export async function deleteSong(id: string): Promise<void> {
+export async function deleteSong(req: Request, res: Response): Promise<void> {
   try {
+    const id = req.params.id;
     await Song.findByIdAndDelete(id).exec();
+    res.json({ message: 'Song deleted successfully' });
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error deleting song' });
   }
 }
 
 // Function to get songs by lyrics
-export async function getSongsByLyrics(lyrics: string): Promise<SongDocument[]> {
+export async function getSongsByLyrics(req: Request, res: Response): Promise<void> {
   try {
+    const lyrics = req.query.lyrics;
     const songs = await Song.find({ lyrics: { $regex: lyrics, $options: 'i' } }).exec();
-    return songs;
+    res.json(songs);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error searching songs by lyrics' });
   }
 }
 
 // Function to get songs by artist
-export async function getSongsByArtist(artist: string): Promise<SongDocument[]> {
+export async function getSongsByArtist(req: Request, res: Response): Promise<void> {
   try {
+    const artist = req.query.artist;
     const songs = await Song.find({ artist: { $regex: artist, $options: 'i' } }).exec();
-    return songs;
+    res.json(songs);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error searching songs by artist' });
   }
 }
 
 // Function to get songs by genre
-export async function getSongsByGenre(genre: string): Promise<SongDocument[]> {
+export async function getSongsByGenre(req: Request, res: Response): Promise<void> {
   try {
+    const genre = req.query.genre;
     const songs = await Song.find({ genre: { $regex: genre, $options: 'i' } }).exec();
-    return songs;
+    res.json(songs);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error searching songs by genre' });
   }
 }
 
 // Function to get songs by date
-export async function getSongsByDate(recordedDate: Date): Promise<SongDocument[]> {
+export async function getSongsByDate(req: Request, res: Response): Promise<void> {
   try {
+    const recordedDate = req.query.recordedDate;
     const songs = await Song.find({ recordedDate: recordedDate }).exec();
-    return songs;
+    res.json(songs);
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: 'Error searching songs by date' });
   }
 }
