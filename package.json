@@ -1,25 +1,27 @@
 {
-  "name": "lyricsfinder",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon ./src/app.ts",
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.1",
-    "nodemon": "^3.1.2",
-    "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "express": "^4.19.2",
-    "express-validator": "^7.1.0",
-    "mongodb": "^6.7.0",
-    "mongoose": "^8.4.1"
+    "name": "lyricsfinder",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "dev": "nodemon ./src/app.ts",
+      "build": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "@types/express": "^4.17.21",
+      "@types/node": "^20.14.1",
+      "nodemon": "^3.1.2",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.4.5"
+    },
+    "dependencies": {
+      "express": "^4.19.2",
+      "express-validator": "^7.1.0",
+      "http-status-codes": "^2.3.0",
+      "mongodb": "^6.7.0",
+      "mongoose": "^8.4.1"
+    }
   }
-}
