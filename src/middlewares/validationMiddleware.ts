@@ -6,7 +6,7 @@ export const validateUserRegistration = [
   body("userLastName").notEmpty().isString(),
   body("userEmail").notEmpty().isEmail(),
   body("userPassword").notEmpty().isString(),
-  body("isAdmin").notEmpty().isBoolean()
+  body("isSubscribed").notEmpty().isBoolean()
 ];
   
 export const validateUserLogin = [

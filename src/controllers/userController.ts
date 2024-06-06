@@ -12,6 +12,7 @@ interface RegisterRequestBody {
   userLastName: string;
   userEmail: string;
   userPassword: string;
+  isSubscribed: boolean;
 }
 
 interface LoginRequestBody {
@@ -21,7 +22,7 @@ interface LoginRequestBody {
 
 export const userRegister = async (request: Request, response: Response) => {
   try {
-    const { userFirstName, userLastName, userEmail, userPassword }: RegisterRequestBody = request.body;
+    const { userFirstName, userLastName, userEmail, userPassword, isSubscribed }: RegisterRequestBody = request.body;
 
     const existingUser = await User.findOne({ userEmail });
 
@@ -41,7 +42,8 @@ export const userRegister = async (request: Request, response: Response) => {
         userLastName: userLastName,
         userEmail: userEmail,
         userPassword: hashedPassword,
-        isAdmin: false
+        isAdmin: false,
+        isSubscribed: isSubscribed
       });
 
       await newUser.save();
