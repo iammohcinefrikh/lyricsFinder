@@ -1,30 +1,58 @@
-// src/index.ts
-import express, { Express } from 'express';
-import { connectDB } from './config/dbConfig'; // Assuming dbConfig.ts handles DB connection
-import songRouter from './routes/songRouter';
-import userRouter from './routes/userRouter'
+// import the express module
+import express from "express";
+// import the mongoose module
+import mongoose from "mongoose";
+// import the dotenv module
 import dotenv from "dotenv";
+
+// load environment variables from a .env file into process.env
 dotenv.config();
 
-async function startServer() {
-  const app: Express = express();
-  const port = process.env.PORT || 3000;
-  try {
-    await connectDB(); // Connect to the database
-    console.log('Database connected successfully');
+// import the user routes
+import userRoutes from "./routes/userRouter";
 
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-    app.use(userRouter);
-    app.use('/api', songRouter);
+// create an express application
+const app = express();
+// use express.json middleware to parse incoming json requests
+app.use(express.json());
+// use express.urlencoded middleware to parse incoming requests with urlencoded payloads
+app.use(express.urlencoded({ extended: false }));
 
-    app.listen(3000, () => {
-      console.log('Server started on port',port);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
+// use the user routes for the application
+app.use(userRoutes);
+
+// async function to connect to the mongodb database
+async function main() {
+    // get the mongodb connection string from the environment variables
+    const connectionString = process.env.MONGODB_CONNECTION_STRING;
+    
+    // if the connection string is not defined, throw an error
+    if (!connectionString) {
+        throw new Error('MONGODB_CONNECTION_STRING is not defined');
+    }
+
+    try {
+        // try to connect to the mongodb database
+        await mongoose.connect(connectionString);
+        // log a success message if the connection is successful
+        console.log("Connected to MongoDB database.");
+    } 
+    
+    // catch any errors that occur during the connection
+    catch (error) {
+        // log the error
+        console.log("Error connecting to MongoDB: ", error);
+    }
 }
 
-startServer();
+// call the main function and catch any errors
+main().catch(console.error);
+
+// get the port from the environment variables or use 8080 as a default
+const PORT = process.env.PORT || 8080;
+
+// start the server listening on the specified port
+app.listen(PORT, () => {
+  // log a message indicating the port the server is listening on
+  console.log("Server Listening on port: ", PORT);
+});

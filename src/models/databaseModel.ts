@@ -1,6 +1,8 @@
-import mongoose, { Document } from "mongoose";
+// import necessary modules
+import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 
+// define the user interface
 interface IUser extends Document {
   userFirstName: string;
   userLastName: string;
@@ -10,6 +12,7 @@ interface IUser extends Document {
   isSubscribed: boolean;
 }
 
+// define the song interface
 interface ISong extends Document {
   songTitle: string;
   songGenre: string;
@@ -18,18 +21,21 @@ interface ISong extends Document {
   songLyrics: string;
 }
 
+// define the artist interface
 interface IArtist extends Document {
   artistFirstName: string;
   artistLastName: string;
   artistPicture: string;
 }
 
+// define the password reset interface
 interface IPasswordReset extends Document {
   userId: ObjectId;
-  code: string;
+  code: number;
   createdAt: Date;
 }
 
+// define the user schema
 const userSchema = new mongoose.Schema<IUser>({
   userFirstName: {
     type: String,
@@ -58,6 +64,7 @@ const userSchema = new mongoose.Schema<IUser>({
   }
 });
 
+// define the song schema
 const songSchema = new mongoose.Schema<ISong>({
   songTitle: {
     type: String,
@@ -75,6 +82,7 @@ const songSchema = new mongoose.Schema<ISong>({
   }
 });
 
+// define the artist schema
 const artistSchema = new mongoose.Schema<IArtist>({
   artistFirstName: {
     type: String,
@@ -87,6 +95,7 @@ const artistSchema = new mongoose.Schema<IArtist>({
   artistPicture: String
 });
 
+// define the password reset schema
 const passwordResetSchema = new mongoose.Schema<IPasswordReset>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -94,7 +103,7 @@ const passwordResetSchema = new mongoose.Schema<IPasswordReset>({
     ref: "User"
   },
   code: {
-    type: String,
+    type: Number,
     required: true
   },
   createdAt: {
@@ -104,9 +113,14 @@ const passwordResetSchema = new mongoose.Schema<IPasswordReset>({
   }
 });
 
+// create the user model
 const User = mongoose.model<IUser>("User", userSchema);
+// create the song model
 const Song = mongoose.model<ISong>("Song", songSchema);
+// create the artist model
 const Artist = mongoose.model<IArtist>("Artist", artistSchema);
+// create the password reset model
 const PasswordReset = mongoose.model<IPasswordReset>("PasswordReset", passwordResetSchema);
 
+// export the models
 export { User, Song, Artist, PasswordReset };
