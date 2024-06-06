@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(userRoutes);
 
-// Correctly named async function
 async function main() {
     const connectionString = process.env.MONGODB_CONNECTION_STRING;
     if (!connectionString) {
@@ -33,5 +32,4 @@ async function main() {
     }
 }
 
-// Call the async function
-main().catch(console.error); // Handle errors
+main().catch(console.error);
