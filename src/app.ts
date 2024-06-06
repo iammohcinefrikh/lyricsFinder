@@ -1,35 +1,30 @@
-import express from "express";
-import mongoose from "mongoose";
+// src/index.ts
+import express, { Express } from 'express';
+import { connectDB } from './config/dbConfig'; // Assuming dbConfig.ts handles DB connection
+import songRouter from './routes/songRouter';
+import userRouter from './routes/userRouter'
 import dotenv from "dotenv";
-
 dotenv.config();
 
-import userRoutes from "./routes/userRouter";
+async function startServer() {
+  const app: Express = express();
+  const port = process.env.PORT || 3000;
+  try {
+    await connectDB(); // Connect to the database
+    console.log('Database connected successfully');
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(userRouter);
+    app.use('/api', songRouter);
 
-app.use(userRoutes);
-
-async function main() {
-    const connectionString = process.env.MONGODB_CONNECTION_STRING;
-    if (!connectionString) {
-        throw new Error('MONGODB_CONNECTION_STRING is not defined');
-    }
-
-    try {
-        await mongoose.connect(connectionString);
-        console.log("Connected to MongoDB database.");
-
-        const PORT = process.env.PORT || 8080;
-
-        app.listen(PORT, () => {
-          console.log("Server Listening on port: ", PORT);
-        });
-    } catch (error) {
-        console.log("Error connecting to MongoDB: ", error);
-    }
+    app.listen(3000, () => {
+      console.log('Server started on port',port);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
 }
 
-main().catch(console.error);
+startServer();

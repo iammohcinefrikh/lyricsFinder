@@ -33,6 +33,7 @@ export async function addSong(req: Request, res: Response): Promise<void> {
     await newSong.save();
     res.json(newSong);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error adding song' });
   }
 }
@@ -63,16 +64,6 @@ export async function deleteSong(req: Request, res: Response): Promise<void> {
   }
 }
 
-// Function to get songs by lyrics
-export async function getSongsByLyrics(req: Request, res: Response): Promise<void> {
-  try {
-    const lyrics = req.query.lyrics;
-    const songs = await Song.find({ lyrics: { $regex: lyrics, $options: 'i' } }).exec();
-    res.json(songs);
-  } catch (error) {
-    res.status(500).json({ message: 'Error searching songs by lyrics' });
-  }
-}
 
 // Function to get songs by artist
 export async function getSongsByArtist(req: Request, res: Response): Promise<void> {
@@ -104,5 +95,22 @@ export async function getSongsByDate(req: Request, res: Response): Promise<void>
     res.json(songs);
   } catch (error) {
     res.status(500).json({ message: 'Error searching songs by date' });
+  }
+}
+//Function to get songs by partial search
+export async function getSongsByLyrics(req: Request, res: Response): Promise<void> {
+  try {
+    const lyrics = req.query.lyrics; // Assuming the lyrics are passed as a query parameter
+    const songs = await Song.find({
+      lyrics: { $regex: lyrics, $options: 'i' } // Use regex for partial match and ignore case
+    }).exec();
+
+    if (songs.length === 0) {
+      res.status(404).json({ message: 'No songs found with those lyrics' });
+    } else {
+      res.json(songs);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching songs by partial lyrics' });
   }
 }
