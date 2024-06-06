@@ -7,6 +7,7 @@ interface IUser extends Document {
   userEmail: string;
   userPassword: string;
   isAdmin: boolean;
+  isSubscribed: boolean;
 }
 
 interface ISong extends Document {
@@ -48,6 +49,10 @@ const userSchema = new mongoose.Schema<IUser>({
     required: true
   },
   isAdmin: {
+    type: Boolean,
+    required: true
+  },
+  isSubscribed: {
     type: Boolean,
     required: true
   }
