@@ -12,6 +12,8 @@ dotenv.config();
 import userRoutes from "./routes/userRouter";
 // import the artist routes
 import artistRoutes from "./routes/artistRouter";
+import newsLetterRoutes from "./routes/newsletterRouter";
+import adminRoutes from "./routes/adminRouter";
 
 // create an express application
 const app = express();
@@ -24,6 +26,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 // use the artist routes for the application
 app.use(artistRoutes);
+// use the newsLetter routes for the application
+app.use(newsLetterRoutes);
+// use the admin user routes for the application
+app.use(adminRoutes);
+
+
 
 // async function to connect to the mongodb database
 async function main() {

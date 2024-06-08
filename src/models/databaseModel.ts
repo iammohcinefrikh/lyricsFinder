@@ -26,6 +26,10 @@ interface IArtist extends Document {
   artistFirstName: string;
   artistLastName: string;
   artistPicture: string;
+  genre: string;
+  born_date: Date;
+  born_city: string;
+  died_date: Date
 }
 
 // define the password reset interface
@@ -92,7 +96,23 @@ const artistSchema = new mongoose.Schema<IArtist>({
     type: String,
     required: true
   },
-  artistPicture: String
+  artistPicture: {String},
+  genre:{
+    type: String,
+    required: true
+  },
+  born_date: {
+    type: Date,
+    required: true
+  },
+  born_city:{
+    type: String,
+    required: true
+  },
+  died_date: {
+    type: Date,
+    required: true
+  }
 });
 
 // define the password reset schema
