@@ -1,7 +1,7 @@
 // import necessary modules
 import express from "express";
 import { validateUserRegistration, validateUserLogin, validateUserPasswordReset, handleValidationErrors } from "../middlewares/validationMiddleware";
-import { userRegister, userLogin, userPasswordResetRequest, userPasswordReset} from "../controllers/userController";
+import { userRegister, userLogin, userPasswordResetRequest, userPasswordReset } from "../controllers/userController";
 import { verifyToken } from "../utils/verifyTokenUtil";
 
 // create a new router

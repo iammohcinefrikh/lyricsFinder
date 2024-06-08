@@ -1,7 +1,8 @@
 // import the request and response types from express
 import { Request, Response } from "express";
 // import the artist model from the database model
-import { Artist, User } from "../models/databaseModel";
+import { Artist } from "../models/databaseModel";
+import { User } from "../models/databaseModel";
 // import the handleresponse function from the handleresponsehelper module
 import { handleResponse } from "../helpers/handleResponseHelper";
 

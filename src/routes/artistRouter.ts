@@ -1,7 +1,8 @@
 // import the express module
 import express from "express";
 // import the getartists function from the artistcontroller module
-import { getArtists, createArtist, updateArtist } from "../controllers/artistController";
+import { getArtists } from "../controllers/artistController";
+import { createArtist, updateArtist } from "../controllers/artistController";
 // import the verifytoken function from the verifytokenutil module
 import { verifyToken } from "../utils/verifyTokenUtil";
 import { validateArtist } from "../middlewares/artistMidleware";
@@ -11,7 +12,7 @@ const router = express.Router();
 
 // define a route to get all artists
 // this route is protected by the verifytoken middleware
-router.get("/api/v1/artists", verifyToken, validateArtist, getArtists);
+router.get("/api/v1/artists", verifyToken, getArtists);
 router.post("/api/v1/artists", verifyToken, validateArtist, createArtist);
 router.put("/api/v1/artists/:id", verifyToken, updateArtist);
 

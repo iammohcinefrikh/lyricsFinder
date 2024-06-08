@@ -96,7 +96,7 @@ const artistSchema = new mongoose.Schema<IArtist>({
     type: String,
     required: true
   },
-  artistPicture: {String},
+  artistPicture: String,
   genre:{
     type: String,
     required: true
