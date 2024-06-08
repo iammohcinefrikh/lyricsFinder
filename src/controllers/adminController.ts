@@ -39,7 +39,7 @@ export const adminRegister = async (request: Request, response: Response) => {
   
       if (existingUser) {
         // if user exists, return a conflict error
-        return response.status(StatusCodes.NOT_FOUND).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
             error: new BadRequestError("user deja exist")
               .message,
             })
@@ -151,20 +151,17 @@ export const adminLogin = async (request: Request, response: Response) => {
        }
   
       const userId = request.params.id;
-       console.log("passed")
       const { isAdmin, isSubscribed }: UpdateUserRequestBody = request.body;
-      console.log("passed2")
       // const updateData: UpdateUserRequestBody = {};
       // if (isAdmin !== undefined) updateData.isAdmin = isAdmin;
       // if (isSubscribed !== undefined) updateData.isSubscribed = isSubscribed;
   
       const updatedUser = await User.findByIdAndUpdate(userId, {isAdmin: isAdmin, isSubscribed: isSubscribed} ,{ new: true });
-      console.log("passed333")
       if (!updatedUser) {
         return handleResponse(response, 404, "error", "Not Found", "not updated");
       }
   
-      return response.json(updateUser)
+      return handleResponse(response, 200, "updateed", "updated", "updated");
   
     } catch (error) {
       console.error(error)

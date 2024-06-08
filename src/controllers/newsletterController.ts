@@ -34,7 +34,7 @@ export const newsletterSend = async(request: Request, response: Response) => {
         const emailUsers = emails.map(user => user.userEmail);
 
         sendNewsletter(emailUsers);
-
+        return handleResponse(response, 200, "success", "OK", "emails sends successfully.");
     } catch (error) {
         handleResponse(response, 500, "error", "Internal Server Error", "Failed to send newsletter.");
     }

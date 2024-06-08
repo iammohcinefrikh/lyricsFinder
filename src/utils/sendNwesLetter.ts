@@ -11,17 +11,23 @@ export const sendNewsletter = async (to: string[]) => {
     auth: {
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+      // Set to false to allow self-signed certificates
+      rejectUnauthorized: false
     }
   });
 
   // define the mail options
   const mailOptions = {
     from: `"lyricsFinder App" <${process.env.EMAIL_ADDRESS}>`,
-    to,
+    bcc: to,
     subject: "Newsletter",
     text: "This is a newsLetter",
     html: `<h1>This is a newsLetter</h1>`,
+   
   };
+  
 
   // send the email
   await transporter.sendMail(mailOptions);
