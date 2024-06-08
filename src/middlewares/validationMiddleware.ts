@@ -25,15 +25,18 @@ export const validateUserLogin = [
 ];
 
 // define the validation rules for password reset
-export const validateUserPasswordReset = [
-  // the user's reset code must not be empty, must be numeric, and must be exactly 6 characters long
-  body("userCode").notEmpty().isNumeric().isLength({ min: 6, max: 6 }),
-  // the user's old password must not be empty and must be a string
-  body("oldPassword").notEmpty().isString(),
-  // the user's new password must not be empty and must be a string
-  body("newPassword").notEmpty().isString()
+export const validateSongData = [
+  // Validate the genre field: must not be empty, must be a string, and between 3 and 50 characters
+  body('genre').notEmpty().isString().trim().isLength({ min: 3, max: 50 }),
+  // Validate the title field: must not be empty, must be a string, and between 3 and 100 characters
+  body('title').notEmpty().isString().trim().isLength({ min: 3, max: 100 }),
+  // Validate the recordedDate field: must not be empty
+  body('recordedDate').notEmpty(),
+  // Validate the lyrics field: must not be empty, must be a string, and between 10 and 5000 characters
+  body('lyrics').notEmpty().isString().trim().isLength({ min: 10, max: 5000 })
 ];
-  
+
+
 // define the middleware for handling validation errors
 export const handleValidationErrors = (request: Request, response: Response, next: NextFunction) => {
   // get the validation result

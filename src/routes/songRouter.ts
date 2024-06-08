@@ -10,6 +10,7 @@ import {
   getSongsByGenre,
   getSongsByDate
 } from '../controllers/songController';
+import { handleValidationErrors, validateSongData } from '../middlewares/validationMiddleware';
 
 const router: Router = express.Router();
 
@@ -20,7 +21,7 @@ router.get('/songs', getAllSongs);
 router.get('/songs/:id', getSongById);
 
 // Add a new song
-router.post('/songs', addSong);
+router.post('/songs',validateSongData,handleValidationErrors, addSong);
 
 // Update a song
 router.put('/songs/:id', updateSong);
