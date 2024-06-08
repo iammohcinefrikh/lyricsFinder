@@ -209,6 +209,11 @@ export const userPasswordReset = async (request: Request, response: Response) =>
           // return a success response
           handleResponse(response, 200, "error", "OK", "Password changed successfully.");
         }
+
+        else {
+          // if the reset code or old password is incorrect, return an error response
+          handleResponse(response, 401, "error", "Unauthorized", "Invalid password reset credentials.");
+        }
       }
     }
   }
