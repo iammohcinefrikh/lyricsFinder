@@ -177,7 +177,7 @@ export const userPasswordReset = async (request: Request, response: Response) =>
       // get the user email from the request
       const userEmail = request.user.email;
       // get the reset code and new password from the request body
-      const { userCode, oldPassword, newPassword }: PasswordResetBody = request.body;
+      const { userCode, newPassword }: PasswordResetBody = request.body;
 
       // check if the user exists
       const existingUser = await User.findOne({ userEmail });
@@ -197,7 +197,7 @@ export const userPasswordReset = async (request: Request, response: Response) =>
 
       else {
         // if a password reset request exists, verify the reset code and old password
-        if (existingPasswordResetRequest.code === userCode && verifyPassword(oldPassword, existingUser.userPassword)) {
+        if (existingPasswordResetRequest.code === userCode) {
           // if verification is successful, hash the new password
           const hashedNewPassword = hashPassword(newPassword);
 
