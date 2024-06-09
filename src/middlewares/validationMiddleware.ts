@@ -24,6 +24,15 @@ export const validateUserLogin = [
   body("userPassword").notEmpty().isString(),
 ];
 
+export const validateUserPasswordReset = [
+  // the user's reset code must not be empty, must be numeric, and must be exactly 6 characters long
+  body('userCode').notEmpty().isNumeric(),
+  // the user's old password must not be empty and must be a string
+  body('oldPassword').notEmpty().isString(),
+  // the user's new password must not be empty and must be a string
+  body('newPassword').notEmpty().isString()
+];
+
 // define the validation rules for password reset
 export const validateSongData = [
   // Validate the genre field: must not be empty, must be a string, and between 3 and 50 characters

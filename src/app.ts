@@ -15,6 +15,8 @@ import artistRoutes from "./routes/artistRouter";
 import newsLetterRoutes from "./routes/newsletterRouter";
 import adminRoutes from "./routes/adminRouter";
 
+import songRoutes from "./routes/songRouter"
+
 // create an express application
 const app = express();
 // use express.json middleware to parse incoming json requests
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // use the user routes for the application
 app.use(userRoutes);
+
+app.use(songRoutes)
 // use the artist routes for the application
 app.use(artistRoutes);
 // use the newsLetter routes for the application

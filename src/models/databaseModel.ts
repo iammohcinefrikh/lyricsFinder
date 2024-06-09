@@ -13,13 +13,13 @@ interface IUser extends Document {
 }
 
 // define the song interface
-interface ISong extends Document {
-  songTitle: string;
-  songGenre: string;
-  songArtist: string;
-  songRecordedDate: Date;
-  songLyrics: string;
-}
+// interface ISong extends Document {
+//   songTitle: string;
+//   songGenre: string;
+//   songArtist: string;
+//   songRecordedDate: Date;
+//   songLyrics: string;
+// }
 
 // define the artist interface
 interface IArtist extends Document {
@@ -69,22 +69,22 @@ const userSchema = new mongoose.Schema<IUser>({
 });
 
 // define the song schema
-const songSchema = new mongoose.Schema<ISong>({
-  songTitle: {
-    type: String,
-    required: true
-  },
-  songGenre: String,
-  songArtist: {
-    type: String,
-    required: true
-  },
-  songRecordedDate: Date,
-  songLyrics: {
-    type: String,
-    required: true
-  }
-});
+// const songSchema = new mongoose.Schema<ISong>({
+//   songTitle: {
+//     type: String,
+//     required: true
+//   },
+//   songGenre: String,
+//   songArtist: {
+//     type: String,
+//     required: true
+//   },
+//   songRecordedDate: Date,
+//   songLyrics: {
+//     type: String,
+//     required: true
+//   }
+// });
 
 // define the artist schema
 const artistSchema = new mongoose.Schema<IArtist>({
@@ -136,11 +136,11 @@ const passwordResetSchema = new mongoose.Schema<IPasswordReset>({
 // create the user model
 const User = mongoose.model<IUser>("User", userSchema);
 // create the song model
-const Song = mongoose.model<ISong>("Song", songSchema);
+// const Song = mongoose.model<ISong>("Song", songSchema);
 // create the artist model
 const Artist = mongoose.model<IArtist>("Artist", artistSchema);
 // create the password reset model
 const PasswordReset = mongoose.model<IPasswordReset>("PasswordReset", passwordResetSchema);
 
 // export the models
-export { User, Song, Artist, PasswordReset };
+export { User, Artist, PasswordReset };
