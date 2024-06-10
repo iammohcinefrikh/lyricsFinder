@@ -12,9 +12,9 @@ const router = express.Router();
 
 // define a route to get all artists
 // this route is protected by the verifytoken middleware
-router.get("/api/v1/artists", getArtists);
-router.post("/api/v1/artists", validateArtist, createArtist);
-router.put("/api/v1/artists/:id", updateArtist);
+router.get("/api/v1/artists", verifyToken ,getArtists);
+router.post("/api/v1/artists",verifyToken, validateArtist, createArtist);
+router.put("/api/v1/artists/:id",verifyToken ,updateArtist);
 
 // export the router object
 export default router;

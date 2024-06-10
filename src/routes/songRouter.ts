@@ -11,6 +11,7 @@ import {
   getSongsByDate
 } from '../controllers/songController';
 import { handleValidationErrors, validateSongData } from '../middlewares/validationMiddleware';
+import { verifyToken } from '../utils/verifyTokenUtil';
 
 const router: Router = express.Router();
 
@@ -21,10 +22,10 @@ router.get('/api/v1/songs', getAllSongs);
 router.get('/api/v1/songs/:id', getSongById);
 
 // Add a new song
-router.post('/api/v1/songs',validateSongData,handleValidationErrors, addSong);
+router.post('/api/v1/songs',verifyToken,validateSongData,handleValidationErrors, addSong);
 
 // Update a song
-router.put('/api/v1/songs/:id', updateSong);
+router.put('/api/v1/songs/:id',verifyToken, updateSong);
 
 // Delete a song
 router.delete('/api/v1/songs/:id', deleteSong);
