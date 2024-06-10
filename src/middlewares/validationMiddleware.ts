@@ -42,7 +42,9 @@ export const validateSongData = [
   // Validate the recordedDate field: must not be empty
   body('recordedDate').notEmpty(),
   // Validate the lyrics field: must not be empty, must be a string, and between 10 and 5000 characters
-  body('lyrics').notEmpty().isString().trim().isLength({ min: 10, max: 5000 })
+  body('lyrics').notEmpty().isString().trim().isLength({ min: 10, max: 5000 }),
+  //
+  body('songArtistId').notEmpty().isString()
 ];
 
 

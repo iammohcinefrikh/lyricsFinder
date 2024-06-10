@@ -15,30 +15,30 @@ import { handleValidationErrors, validateSongData } from '../middlewares/validat
 const router: Router = express.Router();
 
 // Get all songs
-router.get('/songs', getAllSongs);
+router.get('/api/v1/songs', getAllSongs);
 
 // Get a song by ID
-router.get('/songs/:id', getSongById);
+router.get('/api/v1/songs/:id', getSongById);
 
 // Add a new song
-router.post('/songs',validateSongData,handleValidationErrors, addSong);
+router.post('/api/v1/songs',validateSongData,handleValidationErrors, addSong);
 
 // Update a song
-router.put('/songs/:id', updateSong);
+router.put('/api/v1/songs/:id', updateSong);
 
 // Delete a song
-router.delete('/songs/:id', deleteSong);
+router.delete('/api/v1/songs/:id', deleteSong);
 
-// Get songs by lyrics
-router.get('/songs/search/lyrics', getSongsByLyrics);
+// Get/api/v1 songs by lyrics
+router.get('/api/v1/songs/search/lyrics', getSongsByLyrics);
 
-// Get songs by artist
-router.get('/songs/search/artist', getSongsByArtist);
+// Get/api/v1 songs by artist
+router.get('/api/v1/songs/search/artist', getSongsByArtist);
 
-// Get songs by genre
-router.get('/songs/search/genre', getSongsByGenre);
+// Get/api/v1 songs by genre
+router.get('/api/v1/songs/search/genre', getSongsByGenre);
 
-// Get songs by date
-router.get('/songs/search/date', getSongsByDate);
+// Get/api/v1 songs by date
+router.get('/api/v1/songs/search/date', getSongsByDate);
 
 export default router;

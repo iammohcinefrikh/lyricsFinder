@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { Song, SongDocument } from '../models/song.model';
+import { handleResponse } from '../helpers/handleResponseHelper';
+import { User } from '../models/databaseModel';
 
 // Function to get all songs
 export async function getAllSongs(req: Request, res: Response): Promise<void> {
@@ -29,6 +31,22 @@ export async function getSongById(req: Request, res: Response): Promise<void> {
 // Function to add a song
 export async function addSong(req: Request, res: Response): Promise<void> {
   try {
+     //check the user is admin
+     if (!req.user || !req.user.email) {
+      return handleResponse(res, 404, "error", "Not Found", "User account not found.");
+    }
+    const userEmail = req.user.email;
+     // check if the user exists
+     const existingUser = await User.findOne({ userEmail });
+    
+     if (!existingUser) {
+       // if user does not exist, return a not found error
+       return handleResponse(res, 404, "error", "Not Found", "User account not found.");
+     }
+
+     if (!existingUser.isAdmin){
+      return handleResponse(res, 404, "error", "UnAuthorized" ,"Only Admin that has the permission");
+     }
     const newSong = new Song(req.body);
     await newSong.save();
     res.json(newSong);
@@ -39,17 +57,33 @@ export async function addSong(req: Request, res: Response): Promise<void> {
 }
 
 // Function to update a song
-export async function updateSong(req: Request, res: Response): Promise<void> {
+export async function updateSong(request: Request, response: Response): Promise<void> {
   try {
-    const id = req.params.id;
-    const song = await Song.findByIdAndUpdate(id, req.body, { new: true }).exec();
+     //check the user is admin
+     if (!request.user || !request.user.email) {
+      return handleResponse(response, 404, "error", "Not Found", "User account not found.");
+    }
+    const userEmail = request.user.email;
+     // check if the user exists
+     const existingUser = await User.findOne({ userEmail });
+    
+     if (!existingUser) {
+       // if user does not exist, return a not found error
+       return handleResponse(response, 404, "error", "Not Found", "User account not found.");
+     }
+
+     if (!existingUser.isAdmin){
+      return handleResponse(response, 404, "error", "UnAuthorized" ,"Only Admin that has the permission");
+     }
+    const id = request.params.id;
+    const song = await Song.findByIdAndUpdate(id, request.body, { new: true }).exec();
     if (!song) {
-      res.status(404).json({ message: 'Song not found' });
+      response.status(404).json({ message: 'Song not found' });
     } else {
-      res.json(song);
+      response.json(song);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error updating song' });
+    response.status(500).json({ message: 'Error updating song' });
   }
 }
 

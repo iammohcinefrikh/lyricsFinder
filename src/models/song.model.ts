@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import mongoose, { Document } from 'mongoose';
 
 const songSchema = new mongoose.Schema({
@@ -25,6 +26,11 @@ const songSchema = new mongoose.Schema({
     trim: true,
     minlength: 10,
     maxlength: 5000
+  },
+  songArtistId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Artist', // Reference to the Artist model
+    required: true
   }
 });
 
@@ -33,6 +39,7 @@ export interface SongDocument extends Document {
   title: string;
   recordedDate: Number;
   lyrics: string;
+  songArtistId: ObjectId;
 }
 
 export const Song = mongoose.model<SongDocument>('Song', songSchema);

@@ -28,25 +28,26 @@ interface UpdateArtistRequestBody {
   died_date: Date
 }
 
+
 export const createArtist = async (request: Request, response: Response) => {
   try {
     // Check if the user is an admin
-    //check the user is admin
-    if (!request.user || !request.user.email) {
-      return handleResponse(response, 404, "error", "Not Found", "User account not found.");
-    }
-    const userEmail = request.user.email;
-     // check if the user exists
-     const existingAdmin = await User.findOne({ userEmail });
+    // //check the user is admin
+    // if (!request.user || !request.user.email) {
+    //   return handleResponse(response, 404, "error", "Not Found", "User account not found.");
+    // }
+    // const userEmail = request.user.email;
+    //  // check if the user exists
+    //  const existingAdmin = await User.findOne({ userEmail });
     
-     if (!existingAdmin) {
-       // if user does not exist, return a not found error
-       return handleResponse(response, 404, "error", "Not Found", "User account not found.");
-     }
+    //  if (!existingAdmin) {
+    //    // if user does not exist, return a not found error
+    //    return handleResponse(response, 404, "error", "Not Found", "User account not found.");
+    //  }
 
-     if (!existingAdmin.isAdmin){
-      return handleResponse(response, 404, "error", "UnAuthorized" ,"Only Admin that has the permission");
-     }
+    //  if (!existingAdmin.isAdmin){
+    //   return handleResponse(response, 404, "error", "UnAuthorized" ,"Only Admin that has the permission");
+    //  }
 
      // extract user details from the request body
     const { artistFirstName,

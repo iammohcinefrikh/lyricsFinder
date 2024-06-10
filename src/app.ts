@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: false }));
 // use the user routes for the application
 app.use(userRoutes);
 
-app.use(songRoutes)
 // use the artist routes for the application
 app.use(artistRoutes);
+app.use(songRoutes)
 // use the newsLetter routes for the application
 app.use(newsLetterRoutes);
 // use the admin user routes for the application
