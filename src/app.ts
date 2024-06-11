@@ -14,6 +14,8 @@ import userRoutes from "./routes/userRouter";
 import artistRoutes from "./routes/artistRouter";
 import newsLetterRoutes from "./routes/newsletterRouter";
 import adminRoutes from "./routes/adminRouter";
+import {setupCronJob} from "./controllers/cronJobEmails";
+import imageRoutes from "./routes/imageRouter";
 
 // create an express application
 const app = express();
@@ -30,6 +32,10 @@ app.use(artistRoutes);
 app.use(newsLetterRoutes);
 // use the admin user routes for the application
 app.use(adminRoutes);
+// corn job
+//setupCronJob();
+// upload image
+app.use(imageRoutes)
 
 
 
